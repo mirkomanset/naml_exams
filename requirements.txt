@@ -6,3 +6,4 @@ jax
 tqdm
 jupyter
 ipywidgets
+sympy
