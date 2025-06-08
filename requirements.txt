@@ -8,3 +8,6 @@ jupyter
 ipywidgets
 sympy
 jaxopt
+moviepy
+plotly
+seaborn
