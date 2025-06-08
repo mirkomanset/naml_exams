@@ -1,7 +1,5 @@
 import numpy as np
 import jax.numpy as jnp
-import matplotlib.pyplot as plt
-from jax import grad, hessian, jit
 import jax.scipy.optimize
 from jaxopt import BoxOSQP
 

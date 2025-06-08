@@ -48,7 +48,7 @@ def randomized_SVD(X: np.ndarray, k: int) -> tuple[np.ndarray, np.ndarray, np.nd
         s (np.ndarray): Approximate singular values (k,)
         VT (np.ndarray): Approximate right singular vectors (k, m)
     """
-    n, m = X.shape
+    __build_class__, m = X.shape
     G = np.random.randn(m, k)  # Step 1: Random projection matrix (m x k)
     Y = X @ G  # Step 2: Project X onto lower-dimensional subspace (n x k)
     Q, _ = np.linalg.qr(Y)  # Step 3: Orthonormalize the projection
@@ -78,25 +78,18 @@ def randomized_SVD_oversampling(
     """
     _, m = X.shape
     oversampled_l = round(k * 1.5)  # Oversampling (e.g., k + 5 or k + 10 also common)
-
     # Step 1: Generate random Gaussian test matrix
     G = np.random.randn(m, oversampled_l)
-
     # Step 2: Project X onto a lower-dimensional subspace
     Y = X @ G
-
     # Step 3: Orthonormalize Y using QR decomposition
     Q, _ = np.linalg.qr(Y)
-
     # Step 4: Project X into the subspace spanned by Q
     B = Q.T @ X
-
     # Step 5: Compute SVD on the small matrix B
     U_Y, s, VT = np.linalg.svd(B, full_matrices=False)
-
     # Step 6: Lift the left singular vectors back to the original space
     U = Q @ U_Y
-
     return U, s, VT
 
 
@@ -140,6 +133,7 @@ def SVT_approximation(
 
     return X_hat, rank_estimate
 
+
 def SVT_matrix_completion(
     X_full,
     rows_train,
@@ -151,7 +145,7 @@ def SVT_matrix_completion(
     n_max_iter=100,
     threshold=1e-2,
     increment_tol=1e-5,
-    print_progress=True
+    print_progress=True,
 ):
     """
     Performs matrix completion using Singular Value Thresholding (SVT).
@@ -198,7 +192,7 @@ def SVT_matrix_completion(
         vals_predicted = A[rows_test, cols_test]
         errors = vals_test - vals_predicted
 
-        RMSE = np.sqrt(np.mean(errors ** 2))
+        RMSE = np.sqrt(np.mean(errors**2))
         rho = pearsonr(vals_test, vals_predicted)[0]
 
         RMSE_list.append(RMSE)
